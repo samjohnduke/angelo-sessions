@@ -24,12 +24,10 @@ Or install it yourself as:
 Include sessions in your app
 
 ```ruby 
-  class App < Angelo::Base
-    include Angelo::Sessions
-
-    ...
-  
-  end
+class App < Angelo::Base
+  include Angelo::Sessions
+  ...
+end
 ```
 ### Step Two
 
@@ -45,13 +43,13 @@ session_config :secret_token => 'WB8hc93bz6MIsy2HdW5xA4vJ446Ww1ib'
 Add the initialize and finalize methods to your before and after blocks like so
 
 ```ruby 
-  before do
-    init_session request
-  end
+before do
+  init_session request
+end
 
-  after do
-    finalize_session
-  end
+after do
+  finalize_session
+end
 ```
 
 ### Step Four
@@ -59,9 +57,9 @@ Add the initialize and finalize methods to your before and after blocks like so
 access and set values into the session through out your application
 
 ```ruby 
-  session[:some_key] = :some_value
+session[:some_key] = :some_value
 
-  some_value = session[:some_key]
+some_value = session[:some_key]
 ```
 
 ### Step Five
@@ -70,9 +68,9 @@ access and set values into the session through out your application
 
 ## TODO
 
-[ ] Actually run code for the first time. (It's all hypothetical at the moment ie. never been run)
-[ ] Test
-[ ] Implement Cookie store
+- [ ] Actually run code for the first time. (It's all hypothetical at the moment ie. never been run)
+- [ ] Test
+- [ ] Implement Cookie store
 
 Open to Suggestions
 
