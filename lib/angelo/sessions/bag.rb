@@ -7,14 +7,14 @@ module Angelo
 
       def initialize store, request
         if request.headers["Cookie"]
-          
-          cookies = request.headers["Cookie"].split(";").map do |c| 
+          cookies = request.headers["Cookie"].class == Array ? request.headers["Cookie"].first : request.headers["Cookie"]
+          cookies = cookies.split(";").map do |c| 
             h = c.split('=')
             {:name => h[0].strip, :value => h[1].strip} 
           end
 
-          cookie = _cookies.select do |c| 
-            c[:name] == '__mayflower'
+          cookie = cookies.select do |c| 
+            c[:name] == store.name
           end
 
           @key = cookie.first[:value] if cookie.length > 0

@@ -8,12 +8,12 @@ module Angelo
       @@store = Hash.new
 
       def load id
-        results = @@store[id]
+        results = @@store[id] || Hash.new
       end
 
       def save id, fields
         return nil if fields.length <= 0
-        id = key ? key : generate_id
+        id = id ? id : generate_id
         @@store[id] = fields
         id
       end

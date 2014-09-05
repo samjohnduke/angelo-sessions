@@ -2,6 +2,8 @@ module Angelo
   module Sessions
     class Store
 
+      attr_reader :secret, :length, :name
+
       def initialize secret, length, name
         @secret = secret
         @length = length

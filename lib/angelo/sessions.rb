@@ -1,5 +1,8 @@
 require "angelo/sessions/version"
-require "angelo/sessions/"
+require "angelo/sessions/store"
+require "angelo/sessions/store/local"
+require "angelo/sessions/bag"
+
 module Angelo
   module Sessions
 
