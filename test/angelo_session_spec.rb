@@ -4,18 +4,10 @@ describe Angelo::Sessions do
 
   describe "Works when sessions installed" do
 
-    define_app do 
+    define_app do
       include Angelo::Sessions
 
       session_config :secret_token => 'WB8hc93bz6MIsy2HdW5xA4vJ446Ww1ib'
-
-      before do
-        init_session request
-      end
-
-      after do
-        finalize_session
-      end    
 
       Angelo::HTTPABLE.each do |m|
         __send__ m, '/' do
@@ -35,30 +27,22 @@ describe Angelo::Sessions do
 
   describe "Works with sessions" do
 
-    define_app do 
+    define_app do
       include Angelo::Sessions
 
       session_config :secret_token => 'WB8hc93bz6MIsy2HdW5xA4vJ446Ww1ib'
-
-      before do
-        init_session request
-      end
-
-      after do
-        finalize_session
-      end    
 
       get "/session" do
         session[:some_var] = "cookies"
       end
 
       get "/has_session" do
-        session[:another_var] 
+        session[:another_var]
       end
 
       get '/set_session' do
         session[:another_var] = "cookies are awesome"
-      end 
+      end
 
     end
 
@@ -67,7 +51,7 @@ describe Angelo::Sessions do
       last_response.headers["Set-Cookie"].wont_be_nil
     end
 
-    it "should load a past session" do 
+    it "should load a past session" do
       get '/set_session'
       cookie = last_response.headers["Set-Cookie"].split(";").first
 
@@ -89,5 +73,5 @@ describe Angelo::Sessions do
     end
 
   end
-  
+
 end
