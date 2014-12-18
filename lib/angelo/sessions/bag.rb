@@ -6,19 +6,12 @@ module Angelo
     class Bag
 
       def initialize store, request
-        if request.headers["Cookie"]
-          cookies = request.headers["Cookie"].class == Array ? request.headers["Cookie"].first : request.headers["Cookie"]
-          cookies = cookies.split(";").map do |c| 
-            h = c.split('=')
-            {:name => h[0].strip, :value => h[1].strip} 
+        if cookies = request.headers[COOKIE_KEY]
+          cookies = cookies.first if Array === cookies
+          cookies.split(SEMICOLON).each do |c|
+            a = c.split(EQUALS).map &:strip
+            @key = a[1] if a[0] == store.name
           end
-
-          cookie = cookies.select do |c| 
-            c[:name] == store.name
-          end
-
-          @key = cookie.first[:value] if cookie.length > 0
-
         end
 
         @fields = Hash.new
@@ -29,12 +22,12 @@ module Angelo
         get(key)
       end
 
-      def []= key, value 
+      def []= key, value
         set(key, value)
       end
 
       def each &block
-        load
+        fetch
         return @fields.each unless block
 
         @fields.each do |key,value|
@@ -47,13 +40,13 @@ module Angelo
 
         # if we get here we dont have the value we should
         # get the cookie from the store and cache it's values
-        load
+        fetch
 
         @fields[key]
       end
 
-      def load
-        @store.load(@key).each do |item, value|
+      def fetch
+        @store.fetch(@key).each do |item, value|
           @fields[item] = value
         end
       end

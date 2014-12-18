@@ -7,7 +7,7 @@ module Angelo
 
       @@store = Hash.new
 
-      def load id
+      def fetch id
         results = @@store[id] || Hash.new
       end
 
